@@ -6,15 +6,24 @@
 <title>Entregas por Squad · B2C</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@320;330;340;400;480;540;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #E7EAE4; --card: #FFFFFF; --ink: #13211C; --ink-soft: #4C5B53; --ink-faint: #8A968E;
-    --line: #D3D9CF; --line-soft: #E4E8E0;
-    --money: #0C6B4E; --money-deep: #083D2D; --money-wash: #E3EFE9;
-    --effort: #3A463F; --amber: #9A6316; --amber-wash: #F6EAD4; --amber-line: #E4C489;
-    --radius: 14px; --shadow: 0 1px 2px rgba(19,33,28,.04), 0 4px 16px rgba(19,33,28,.05);
+    --bg: #FFFFFF; --card: #FFFFFF; --ink: #000000; --ink-soft: #000000; --ink-faint: #6B6B6B;
+    --line: #E6E6E6; --line-soft: #F1F1F1; --surface-soft: #F7F7F5;
+    --money: #1EA64A; --money-deep: #146631; --money-wash: #C8E6CD;
+    --amber: #000000; --amber-wash: #F4ECD6; --amber-line: #E6E6E6;
+    --red: #000000; --red-wash: #F3C9B6; --red-line: #E6E6E6;
+    --magenta: #FF3D8B;
+    --radius: 24px; --radius-sm: 8px; --pill: 50px; --shadow: none;
   }
+  /* Alternador de visão, integrado ao masthead */
+  .mh-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 5px; }
+  .mh-switch { display: flex; gap: 6px; flex-shrink: 0; margin-top: 12px; }
+  .mh-tab { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 480; letter-spacing: .01em; color: var(--ink); padding: 9px 18px; border-radius: var(--pill); text-decoration: none; border: 1px solid var(--ink); background: var(--card); transition: all .15s; white-space: nowrap; }
+  .mh-tab:hover { background: var(--surface-soft); }
+  .mh-tab.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--ink); font-family: 'Inter', system-ui, sans-serif; font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; padding: 0 18px 60px; }
   .wrap { max-width: 1080px; margin: 0 auto; padding-top: 24px; }
@@ -35,7 +44,7 @@
   .ac-list {
     position: absolute; left: 18px; right: 18px; top: calc(100% + 6px);
     background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-    box-shadow: 0 8px 28px rgba(19,33,28,.14); max-height: 380px; overflow-y: auto;
+    box-shadow: 0 8px 28px rgba(0,0,0,.12); max-height: 380px; overflow-y: auto;
     display: none; z-index: 45;
   }
   .ac-list.open { display: block; }
@@ -55,9 +64,9 @@
   .mono { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
 
   /* Masthead */
-  .masthead { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+  .masthead { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
   .masthead .eyebrow { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; margin-bottom: 5px; }
-  .masthead h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 25px; letter-spacing: -.01em; }
+  .masthead h1 { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 25px; letter-spacing: -.01em; }
   .masthead .meta { font-size: 12px; color: var(--ink-faint); text-align: right; }
   .masthead .meta .mono { color: var(--ink-soft); }
 
@@ -91,13 +100,13 @@
   .connfail button { font-family:'Inter',sans-serif; font-size: 12.5px; font-weight: 600; color: #C0392B; background: transparent; border: 1px solid #F3C0C0; padding: 7px 13px; border-radius: 8px; cursor: pointer; }
   .connfail button:hover { background: #F9DCDC; }
 
-  .section-title { font-family:'Space Grotesk',sans-serif; font-size: 13px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-faint); margin: 4px 0 12px; }
+  .section-title { font-family:'JetBrains Mono',monospace; font-size: 11.5px; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); margin: 4px 0 12px; }
 
   /* Squad cards (home) */
   .squad-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(265px, 1fr)); gap: 12px; }
   .squad-card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; cursor: pointer; transition: all .15s; box-shadow: var(--shadow); text-align: left; font-family: inherit; }
-  .squad-card:hover { border-color: var(--money); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(12,107,78,.12); }
-  .squad-card .sname { font-family:'Space Grotesk',sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .squad-card:hover { border-color: var(--ink); }
+  .squad-card .sname { font-family:'Inter',sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
   .squad-card .sname .arrow { color: var(--ink-faint); font-size: 15px; transition: transform .15s; }
   .squad-card:hover .sname .arrow { transform: translateX(3px); color: var(--money); }
   .squad-card .metrics { display: flex; gap: 14px; align-items: flex-start; }
@@ -113,7 +122,7 @@
 
   /* Squad detail header */
   .sqhead { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 18px; box-shadow: var(--shadow); }
-  .sqhead h2 { font-family:'Space Grotesk',sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 14px; }
+  .sqhead h2 { font-family:'Inter',sans-serif; font-size: 22px; font-weight: 700; margin-bottom: 14px; }
   .sqhead .row { display: flex; gap: 32px; flex-wrap: wrap; }
   .sqhead .m .mv { font-family:'JetBrains Mono',monospace; font-weight: 700; font-size: 20px; }
   .sqhead .m .mv.money { color: var(--money-deep); }
@@ -151,21 +160,21 @@
   /* Sort toggle */
   .sortbar { display: flex; gap: 7px; margin-bottom: 14px; }
   .sortbtn { font-family:'Inter',sans-serif; font-size: 12.5px; font-weight: 500; padding: 6px 13px; border-radius: 20px; cursor: pointer; background: var(--card); border: 1px solid var(--line); color: var(--ink-soft); transition: all .13s; }
-  .sortbtn:hover { border-color: var(--money); color: var(--money); }
+  .sortbtn:hover { border-color: var(--ink); color: var(--ink); }
   .sortbtn.active { background: var(--money-deep); border-color: var(--money-deep); color: #fff; }
 
   /* States */
   .state { text-align: center; padding: 80px 20px; color: var(--ink-soft); }
-  .state h2 { font-family:'Space Grotesk',sans-serif; font-size: 18px; margin-bottom: 10px; color: var(--ink); }
+  .state h2 { font-family:'Inter',sans-serif; font-size: 18px; margin-bottom: 10px; color: var(--ink); }
   .state code { font-family:'JetBrains Mono',monospace; font-size: 12.5px; background:#fff; padding:2px 6px; border-radius:5px; border:1px solid var(--line); }
   .spinner { width: 30px; height: 30px; border: 3px solid var(--line); border-top-color: var(--money); border-radius: 50%; margin: 0 auto 20px; animation: spin 1s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
   /* Modal */
-  .modal-bg { position: fixed; inset: 0; background: rgba(19,33,28,.45); display: none; place-items: center; padding: 20px; z-index: 50; }
+  .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; place-items: center; padding: 20px; z-index: 50; }
   .modal-bg.open { display: grid; }
   .modal { background: var(--card); border-radius: var(--radius); max-width: 520px; width: 100%; max-height: 80vh; overflow-y: auto; padding: 24px 26px; }
-  .modal h3 { font-family:'Space Grotesk',sans-serif; font-size: 17px; margin-bottom: 4px; }
+  .modal h3 { font-family:'Inter',sans-serif; font-size: 17px; margin-bottom: 4px; }
   .modal .msub { font-size: 13px; color: var(--ink-soft); margin-bottom: 18px; }
   .modal .prow { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line-soft); font-size: 13.5px; }
   .modal .prow:last-child { border: none; }
@@ -264,6 +273,15 @@ function erro(msg) {
 }
 
 // ====== HOME (lista de squads) ======
+function masthead(){
+  return `<div class="masthead">
+      <div>
+        <h1>Relatório de Custos Diretos do Time</h1>
+        <div class="mh-switch"><a class="mh-tab " href="dashboard-horas.html">Apontamento de Horas</a><a class="mh-tab active" href="index.html">Custo das Implementações</a></div>
+      </div>
+      <div class="meta">atualizado<br><span class="mono">${new Date(DATA.geradoEm).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</span></div>
+    </div>`;
+}
 function renderHome() {
   view = 'home';
   const t = DATA.totais, a = DATA.alertas;
@@ -271,13 +289,7 @@ function renderHome() {
   const squads = ordenarSquads(DATA.porSquad, ordSquad);
 
   document.getElementById('app').innerHTML = `
-    <div class="masthead">
-      <div>
-        <div class="eyebrow">Entregas · squad B2C</div>
-        <h1>Acompanhamento por time</h1>
-      </div>
-      <div class="meta">atualizado<br><span class="mono">${new Date(DATA.geradoEm).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</span></div>
-    </div>
+    ${masthead()}
 
     <div class="strip">
       <div class="cell"><div class="l">Custo medido</div><div class="v money">${brl0.format(t.custo)}</div></div>
@@ -365,6 +377,8 @@ function renderSquad() {
   }
 
   document.getElementById('app').innerHTML = `
+    ${masthead()}
+
     <div class="crumb">
       <button onclick="renderHome()">← Todos os squads</button>
       <span class="sep">/</span>
